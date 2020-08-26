@@ -1,0 +1,41 @@
+﻿@model Models.ViewModel.ProductViewModel
+
+@{
+    ViewData["Title"] = "Product";
+}
+<div class="container bootdey text-center">
+
+    @if (Model == null || Model.ProductList == null || Model.ProductList.Count == 0)
+    {
+        <br />
+        <h2 class="disabled">Product not found.</h2>
+        <br />
+    }
+    else
+    {
+            <div class="row">
+                <div class="col-md-3 mx-auto">
+                    @{var count = Model.ProductList.Count; }
+                    @{int columns = Model.ColumnsByRow; }
+                    @{int rest = count % columns == 0 ? 0 : columns - count % columns; }
+                    <h2 class="text-primary">@Model.ProductList.FirstOrDefault().Name</h2>
+                    <div class="box-product-outer col-sm">
+                        <div class="box-product">
+                            <div class="img-wrapper">
+                                <a href="#">
+                                    <img alt="Product" src="@Url.Content("~/Images/default-product-image.png")">
+                                </a>
+                                <div class="option">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart"><i class="ace-icon fa fa-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                            <div class="price">
+                                <h6 class="text-dark">Category: @Model.ProductList.FirstOrDefault().Category?.Name</h6>
+                                <h4 class="text-success">@Model.ProductList.FirstOrDefault().Price.Value.ToString("$###,###,##0.00")</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+</div>

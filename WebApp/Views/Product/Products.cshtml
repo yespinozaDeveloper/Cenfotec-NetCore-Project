@@ -1,0 +1,81 @@
+﻿@model Models.ViewModel.ProductViewModel
+
+@{
+    ViewData["Title"] = "Product";
+}
+<div class="container bootdey text-center">
+
+    @if (Model == null || Model.ProductList == null || Model.ProductList.Count == 0)
+    {
+        <br />
+        <h2 class="disabled">No products available.</h2>
+        <br />
+    }
+    else
+    {
+        <div class="col-md-12">
+            <div class="title text-center">
+                <p>
+                    <form class="form-inline">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <select class="form-control">
+                                <option value="-1" selected>All</option>
+                                @foreach (var item in Model.CategoryList)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                            <input type="text" class="form-control" placeholder="Type your product">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </p>
+            </div>
+            <div class="container">
+                <div class="row ">
+                    @{var count = Model.ProductList.Count; }
+                    @{int columns = Model.ColumnsByRow; }
+                    @{int rest = count % columns == 0 ? 0 : columns - count % columns; }
+
+                    @for (int i = 1; i <= count; i++)
+                    {
+                        <div class="box-product-outer col-sm">
+                            <div class="box-product">
+                                <div class="img-wrapper">
+                                    <a href="Product/@Model.ProductList.ElementAtOrDefault(i - 1).Id.ToString("0")">
+                                        <img alt="Product" src="@Url.Content("~/Images/default-product-image.png")">
+                                    </a>
+                                    <div class="option">
+                                        <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart">
+                                            <i class="ace-icon fa fa-shopping-cart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <h6><a href="Product/@Model.ProductList.ElementAtOrDefault(i - 1).Id.ToString("0")">@Model.ProductList.ElementAtOrDefault(i - 1)?.Name</a></h6>
+                                <div class="price">
+                                    <div class="text-success">@Model.ProductList.ElementAtOrDefault(i-1)?.Price.Value.ToString("$###,###,##0.00")</div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (i != 1 && i % columns == 0 && i < count)
+                        {
+                        @:</div><div class="row ">
+                        }
+                        @if (i == count && count % columns != 0)
+                        {
+                            @for (int x = 0; x < rest; x++)
+                            {
+                                <div class="col-sm" style="visibility:hidden"></div>
+                            }
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

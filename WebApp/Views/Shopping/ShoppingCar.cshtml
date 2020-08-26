@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Product";
+}
+<div class="container text-right">
+    <br />
+    <b>Summary: $1,000</b>
+    <button class="btn-outline-dark btn-lg"> Order Now </button>
+    <br />
+    <br />
+</div>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int count = 26; }
+            @for (int i = 1; i <= count; i++)
+            {
+                <tr>
+                    <th scope="row">@i.ToString("00")</th>
+                    <td>Product @i.ToString("00")</td>
+                    <td>$@i.ToString("0.00").Replace(".","")</td>
+                    <td><i class="ace-icon fa fa-trash"></i> <i class="ace-icon fa fa-info"></i> </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <th scope="row" class="row disabled">Summary</th>
+                <td class="disabled" colspan="3">$1,000</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
