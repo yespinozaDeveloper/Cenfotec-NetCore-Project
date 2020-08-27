@@ -13,10 +13,12 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
                     <img class="rounded-circle" alt="100x100" style="width:50px;height:50px"
                          src="@Url.Content("~/Images/Cenfotec-NetCore-icon.png")" data-holder-rendered="true">
-                    <font color="#7D58A7"><b> jShop </b>| </font>
+                </a>
+                <a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Login">
+                    <font color="#7D58A7"><b>&nbsp;&nbsp;jShop &nbsp;&nbsp;</b>| </font>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +39,8 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Shopping" asp-action="ShoppingCar">
-                            <i class="ace-icon fa fa-shopping-cart" style="color:#B689BA;font-size:xx-large"></i></a>
+                                <i class="ace-icon fa fa-shopping-cart" style="color:#B689BA;font-size:xx-large"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>

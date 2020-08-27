@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - jShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/gallery-theme/gallery-theme.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+    </header>
+    <div>
+        <main role="main">
+            <div class="container-fluid">
+                <br /><br />
+                @RenderBody()
+                <br /><br />
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer text-center bg-dark">
+        <div class="container text-white">
+            jShop by <a href="https://www.linkedin.com/in/yeison-espinoza-gonz%C3%A1lez-716056120/">yespinoza</a> - 2020 &copy; All rights reserved.
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

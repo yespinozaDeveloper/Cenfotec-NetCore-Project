@@ -1,0 +1,72 @@
+﻿@model Models.ViewModel.ProductViewModel
+
+@{
+    ViewData["Title"] = "Product";
+    Layout = "_AdminLayout";
+}
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/datatable.css" />
+    <script src="~/js/jquery-min.js" asp-append-version="true"></script>
+    <script src="~/js/datatable.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+</head>
+<body>
+    <br />
+    <h2 class="text-center">Product List</h2>
+
+    <div class="title text-center">
+        <p>
+            <form class="justify-content-center">
+                <div class="form-group mx-sm-3 mb-2">
+                    <button type="submit" class="btn btn-dark" asp-controller="Product" asp-action="AddProduct"> <i class="fa fa-plus"></i> New Product</button>
+                </div>
+            </form>
+        </p>
+    </div>
+    <div class="container-fluid justify-content-center">
+        <br />
+        <table id="example" class="dataTable table-haver table-bordered" style="width:90%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProductList)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Price.Value.ToString("###,###,##0.00")</td>
+                        <td>@item.Category.Name</td>
+                        <td><i class="fa fa-edit bg-light"></i>   <i class="ace-icon fa fa-trash bg-light"></i></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <style>
+            #mydatatable tfoot input {
+                width: 100% !important;
+            }
+
+            #mydatatable tfoot {
+                display: table-header-group !important;
+            }
+        </style>
+    </div>
+    <br />
+    <br />
+</body>
+</html>

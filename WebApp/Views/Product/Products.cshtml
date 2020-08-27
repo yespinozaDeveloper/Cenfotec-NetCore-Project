@@ -57,7 +57,7 @@
                                 </div>
                                 <h6><a href="Product/@Model.ProductList.ElementAtOrDefault(i - 1).Id.ToString("0")">@Model.ProductList.ElementAtOrDefault(i - 1)?.Name</a></h6>
                                 <div class="price">
-                                    <div class="text-success">@Model.ProductList.ElementAtOrDefault(i-1)?.Price.Value.ToString("$###,###,##0.00")</div>
+                                    <div class="text-success">@Model.ProductList.ElementAtOrDefault(i - 1)?.Price.Value.ToString("$###,###,##0.00")</div>
                                 </div>
                             </div>
                         </div>
@@ -77,5 +77,7 @@
 
             </div>
         </div>
+        <br />
+        <br />
     }
 </div>

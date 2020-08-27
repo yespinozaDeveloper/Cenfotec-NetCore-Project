@@ -26,7 +26,7 @@ namespace WebApp.Controllers
                 viewModel = new ProductViewModel();
         }
 
-        public async System.Threading.Tasks.Task<IActionResult> ProductsAsync()
+        public async System.Threading.Tasks.Task<IActionResult> Products()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WebApp.Controllers
                     viewModel.ProductList = list;
 
                     var resultCategories = await client.GetStringAsync("Category");
-                    _logger.LogInformation("Response Categories: {0}", resultProduct);
+                    _logger.LogInformation("Response Categories: {0}", resultCategories);
                     var categoryList = JsonSerializer.Deserialize<List<CategoryEntity>>(resultCategories);
                     viewModel.CategoryList = categoryList;
                 }
@@ -62,6 +62,59 @@ namespace WebApp.Controllers
             };
             return View(viewModel);
         }
+
+        public async System.Threading.Tasks.Task<IActionResult> ProductMaintenance()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var webApi = _settings.ServerUrl;
+                    _logger.LogInformation("Web Api: {0}", webApi);
+                    client.BaseAddress = new Uri(webApi);
+                    var resultProduct = await client.GetStringAsync("Product");
+                    _logger.LogInformation("Response Products: {0}", resultProduct);
+                    var list = JsonSerializer.Deserialize<List<ProductEntity>>(resultProduct);
+                    viewModel.ProductList = list;
+
+                    var resultCategories = await client.GetStringAsync("Category");
+                    _logger.LogInformation("Response Categories: {0}", resultCategories);
+                    var categoryList = JsonSerializer.Deserialize<List<CategoryEntity>>(resultCategories);
+                    viewModel.CategoryList = categoryList;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return View(getViewModel());
+        }
+
+        public async System.Threading.Tasks.Task<IActionResult> AddProduct(AddProductViewModel viewModel)
+        {
+            if(viewModel == null)
+                viewModel = new AddProductViewModel();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var webApi = _settings.ServerUrl;
+                    _logger.LogInformation("Web Api: {0}", webApi);
+                    client.BaseAddress = new Uri(webApi);
+
+                    var resultCategories = await client.GetStringAsync("Category");
+                    _logger.LogInformation("Response Categories: {0}", resultCategories);
+                    var categoryList = JsonSerializer.Deserialize<List<CategoryEntity>>(resultCategories);
+                    viewModel.CategoryList = categoryList;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return View(viewModel);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
