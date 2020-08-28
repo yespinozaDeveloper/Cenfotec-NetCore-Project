@@ -6,3 +6,4 @@ D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\Models
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\Models\obj\Debug\netcoreapp3.1\Models.csproj.CoreCompileInputs.cache
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\Models\obj\Debug\netcoreapp3.1\Models.dll
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\Models\obj\Debug\netcoreapp3.1\Models.pdb
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\Models\obj\Debug\netcoreapp3.1\Models.csprojAssemblyReference.cache

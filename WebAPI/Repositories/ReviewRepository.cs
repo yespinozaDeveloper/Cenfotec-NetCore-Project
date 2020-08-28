@@ -7,11 +7,11 @@ using WebAPI.Infrastructure.Data.Models;
 
 namespace WebAPI.Repositories
 {
-    public class ProductRepository
+    public class ReviewRepository
     {
         public TMP_DEMOContext context { get; set; }
 
-        public ProductRepository(TMP_DEMOContext dbContext)
+        public ReviewRepository(TMP_DEMOContext dbContext)
         {
             context = dbContext;
         }
@@ -70,30 +70,6 @@ namespace WebAPI.Repositories
                               Name = category.Name
                           }
                       }).ToList();
-            return productList;
-        }
-
-        public List<ProductEntity> GetByOrder(long id)
-        {
-            var productList = (from a in context.Order
-                       where a.Active.Value && a.PkOrder == id
-                       join b in context.OrderDetail
-                       on a.PkOrder equals b.FkOrder
-                       join c in context.Product
-                       on b.FkProduct equals c.PkProduct
-                       join d in context.Category
-                       on c.FkCategory equals d.PkCategory
-                       select new ProductEntity
-                       {
-                           Id = c.PkProduct,
-                           Name = c.Name,
-                           Price = c.Price,
-                           Category = new CategoryEntity
-                           {
-                               Id = d.PkCategory,
-                               Name = d.Name
-                           }
-                       }).ToList();
             return productList;
         }
 

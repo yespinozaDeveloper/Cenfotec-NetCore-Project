@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models.Entity;
+using Models.Request;
 using WebAPI.Models;
 using WebAPI.Repositories;
 
@@ -12,29 +13,23 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class OrderDetailController : ControllerBase
     {
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<OrderDetailController> _logger;
         private readonly ApplicationSettings _settings;
-        private readonly ProductRepository _repository;
+        private readonly OrderDetailRepository _repository;
 
-        public ProductController(ILogger<ProductController> logger,
+        public OrderDetailController(ILogger<OrderDetailController> logger,
                                   ApplicationSettings settings,
-                                  ProductRepository repository)
+                                  OrderDetailRepository repository)
         {
             _logger = logger;
             _settings = settings;
             _repository = repository;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var result = _repository.Get();
-            return Ok(result);
-        }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
             var result = _repository.Get(id);
@@ -46,48 +41,25 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("ByCategory/{id}")]
-        public IActionResult GetByCategory(int id)
-        {
-            var result = _repository.GetByCategory(id);
 
-            if (result == null)
-            {
-                return NotFound(new { Message = "No se encotraron elementos" });
-            }
-            return Ok(result);
-        }
-
-        [HttpGet("ByOrder/{id}")]
+        [HttpGet("GetByOrder/{id}")]
         public IActionResult GetByOrder(int id)
         {
             var result = _repository.GetByOrder(id);
 
             if (result == null || result.Count == 0)
             {
-                return NotFound(new { Message = "No se encotraron elementos" });
+                return NotFound(new { Message = "No se encontraron elementos" });
             }
             return Ok(result);
         }
 
         [HttpPost]
-        public IActionResult Create(ProductEntity request)
+        public IActionResult Create(OrderAddProductRequest param)
         {
-            long newProductId = _repository.Save(request);
+            long newProductId = _repository.Save(param);
             var data = _repository.Get(newProductId);
             return CreatedAtAction(nameof(GetById), new { Id = newProductId }, data);
-        }
-
-        [HttpPut]
-        public IActionResult Put(ProductEntity request)
-        {
-            var flag = _repository.Update(request);
-            if (flag)
-            {
-                return Ok(request);
-            }
-            else
-                return NotFound(new { Message = "No se encuentra el elemento" });
         }
 
         [HttpDelete("{id}")]

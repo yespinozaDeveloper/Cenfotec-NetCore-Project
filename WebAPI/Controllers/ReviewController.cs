@@ -12,13 +12,13 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ReviewController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
         private readonly ApplicationSettings _settings;
         private readonly ProductRepository _repository;
 
-        public ProductController(ILogger<ProductController> logger,
+        public ReviewController(ILogger<ProductController> logger,
                                   ApplicationSettings settings,
                                   ProductRepository repository)
         {
@@ -53,19 +53,7 @@ namespace WebAPI.Controllers
 
             if (result == null)
             {
-                return NotFound(new { Message = "No se encotraron elementos" });
-            }
-            return Ok(result);
-        }
-
-        [HttpGet("ByOrder/{id}")]
-        public IActionResult GetByOrder(int id)
-        {
-            var result = _repository.GetByOrder(id);
-
-            if (result == null || result.Count == 0)
-            {
-                return NotFound(new { Message = "No se encotraron elementos" });
+                return NotFound(new { Message = "No se encuentraron elementos" });
             }
             return Ok(result);
         }
