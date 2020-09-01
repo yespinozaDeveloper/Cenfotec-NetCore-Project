@@ -9,5 +9,10 @@ namespace Models.Entity
         public long Id { get; set; }
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        public CategoryEntity()
+        {
+            Id = -1;
+        }
     }
 }

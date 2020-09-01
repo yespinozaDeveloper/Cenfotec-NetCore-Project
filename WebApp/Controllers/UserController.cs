@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models.Entity;
 using WebApp.Models;
+using WebApp.Repositories;
 
 namespace WebApp.Controllers
 {
@@ -48,26 +49,17 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    using (var client = new HttpClient())
+                    var userEntity = UserRepository.Login(user, password);
+                    if (userEntity == null)
                     {
-                        var webApi = _settings.ServerUrl;
-                        _logger.LogInformation("Web Api: {0}", webApi);
-                        client.BaseAddress = new Uri(webApi);
-                        var result = await client.GetStringAsync($"User/{user}/{password}");
-                        _logger.LogInformation("Response Products: {0}", result);
-                        var userEntity = JsonSerializer.Deserialize<UserEntity>(result);
-                        if (userEntity == null)
-                        {
-                            dictionary.Add("ERROR", "User and/or password incorrect");
-                            return View("Login", dictionary);
-                        }
-                        else
-                        {
-                            return Redirect("Product/ProductMaintenance"); ;
-                        }
+                        dictionary.Add("ERROR", "User and/or password incorrect");
+                        return View("Login", dictionary);
+                    }
+                    else
+                    {
+                        return Redirect("Product/ProductMaintenance"); ;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -75,6 +67,12 @@ namespace WebApp.Controllers
                 dictionary.Add("ERROR", "User and/or password incorrect");
                 return View("Login", dictionary);
             }
+        }
+
+        public async System.Threading.Tasks.Task<IActionResult> Logout()
+        {
+            ApplicationCacheData.getInstance().CurrentUser = null;
+            return RedirectToAction("Index", "Home");
         }
     }
 }

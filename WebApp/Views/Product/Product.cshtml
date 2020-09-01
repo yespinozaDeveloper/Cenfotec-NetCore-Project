@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Product";
 }
+<link rel="stylesheet" href="~/css/blog.css" />
 <div class="container bootdey text-center">
 
     @if (Model == null || Model.ProductList == null || Model.ProductList.Count == 0)
@@ -13,29 +14,78 @@
     }
     else
     {
-            <div class="row">
-                <div class="col-md-3 mx-auto">
-                    @{var count = Model.ProductList.Count; }
-                    @{int columns = Model.ColumnsByRow; }
-                    @{int rest = count % columns == 0 ? 0 : columns - count % columns; }
-                    <h2 class="text-primary">@Model.ProductList.FirstOrDefault().Name</h2>
-                    <div class="box-product-outer col-sm">
-                        <div class="box-product">
-                            <div class="img-wrapper">
-                                <a href="#">
-                                    <img alt="Product" src="@Url.Content("~/Images/default-product-image.png")">
+        <div class="row">
+            <div class="col-md-3 mx-auto">
+                @{var count = Model.ProductList.Count; }
+                @{int columns = Model.ColumnsByRow; }
+                @{int rest = count % columns == 0 ? 0 : columns - count % columns; }
+                <h2 class="text-primary">@Model.ProductList.FirstOrDefault().Name</h2>
+                <div class="box-product-outer col-sm">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a href="#">
+                                <img alt="Product" src="@Url.Content("~/Images/default-product-image.png")">
+                            </a>
+                            <div class="option">
+                                <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart" asp-controller="Shopping" asp-action="AddProduct" asp-route-accountKey="@Model.ProductList.FirstOrDefault().Id">
+                                    <i class="ace-icon fa fa-shopping-cart"></i>
                                 </a>
-                                <div class="option">
-                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart"><i class="ace-icon fa fa-shopping-cart"></i></a>
-                                </div>
                             </div>
-                            <div class="price">
-                                <h6 class="text-dark">Category: @Model.ProductList.FirstOrDefault().Category?.Name</h6>
-                                <h4 class="text-success">@Model.ProductList.FirstOrDefault().Price.Value.ToString("$###,###,##0.00")</h4>
-                            </div>
+                        </div>
+                        <div class="price">
+                            <h6 class="text-dark">Category: @Model.ProductList.FirstOrDefault().Category?.Name</h6>
+                            <h4 class="text-success">@Model.ProductList.FirstOrDefault().Price.ToString("$###,###,##0.00")</h4>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="container bootstrap snippets bootdey">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="blog-comment">
+                            <h3 class="text-info">Comments</h3>
+                            <hr />
+                            <ul class="comments">
+                                <li class="clearfix">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
+                                    <div class="post-comments">
+                                        <p class="meta">Dec 18, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Etiam a sapien odio, sit amet
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <img src="https://bootdey.com/img/Content/user_2.jpg" class="avatar" alt="">
+                                    <div class="post-comments">
+                                        <p class="meta">Dec 19, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Etiam a sapien odio, sit amet
+                                        </p>
+                                    </div>
+
+                                    <ul class="comments">
+                                        <li class="clearfix">
+                                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
+                                            <div class="post-comments">
+                                                <p class="meta">Dec 20, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Etiam a sapien odio, sit amet
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </div>

@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(OrderAddProductRequest param)
+        public IActionResult Create(CreateOrderDetailParam param)
         {
             long newProductId = _repository.Save(param);
             var data = _repository.Get(newProductId);

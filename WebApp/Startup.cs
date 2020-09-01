@@ -28,11 +28,12 @@ namespace WebApp
             var appSettingsSection = Configuration.GetSection("AppSettings");
             appSettingsSection.Bind(applicationSettings);
 
-            var var1 = Environment.GetEnvironmentVariable("ServerUrl");
-            if (!string.IsNullOrEmpty(var1))
+            var serverURL = Environment.GetEnvironmentVariable("ServerUrl");
+            if (!string.IsNullOrEmpty(serverURL))
             {
-                applicationSettings.ServerUrl = var1;
+                applicationSettings.ServerUrl = serverURL;
             }
+            NetworkHelper.init(applicationSettings.ServerUrl);
 
             services.AddSingleton(applicationSettings);
             services.AddControllersWithViews();

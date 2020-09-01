@@ -14,23 +14,16 @@
     else
     {
         <div class="col-md-12">
-            <div class="title text-center">
+            <div class="title text-center justify-content-center">
                 <p>
                     <form class="form-inline">
                         <div class="form-group mx-sm-3 mb-2">
-                            <select class="form-control">
-                                <option value="-1" selected>All</option>
-                                @foreach (var item in Model.CategoryList)
-                                {
-                                    <option value="@item.Id">@item.Name</option>
-                                }
-                            </select>
+                            @Html.DropDownListFor(x => Model.SelectedCategoryId,
+                            new SelectList(Model.CategoryList, "Value", "Text"),
+                            htmlAttributes: new { @class = "form-control", id = "Category", @required = true })
                         </div>
                         <div class="form-group mx-sm-3 mb-2">
-                            <input type="text" class="form-control" placeholder="Type your product">
-                        </div>
-                        <div class="form-group mx-sm-3 mb-2">
-                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" class="btn btn-primary" asp-controller="Product" asp-action="ProductsByCategory">Search</button>
                         </div>
                     </form>
                 </p>
@@ -50,14 +43,14 @@
                                         <img alt="Product" src="@Url.Content("~/Images/default-product-image.png")">
                                     </a>
                                     <div class="option">
-                                        <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart">
+                                        <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart" asp-controller="Shopping" asp-action="AddProduct" asp-route-accountKey="@Model.ProductList.ElementAtOrDefault(i - 1).Id">
                                             <i class="ace-icon fa fa-shopping-cart"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <h6><a href="Product/@Model.ProductList.ElementAtOrDefault(i - 1).Id.ToString("0")">@Model.ProductList.ElementAtOrDefault(i - 1)?.Name</a></h6>
                                 <div class="price">
-                                    <div class="text-success">@Model.ProductList.ElementAtOrDefault(i - 1)?.Price.Value.ToString("$###,###,##0.00")</div>
+                                    <div class="text-success">@Model.ProductList.ElementAtOrDefault(i - 1)?.Price.ToString("$###,###,##0.00")</div>
                                 </div>
                             </div>
                         </div>

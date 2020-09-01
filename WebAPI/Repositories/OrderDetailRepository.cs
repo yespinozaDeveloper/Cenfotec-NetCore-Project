@@ -75,18 +75,18 @@ namespace WebAPI.Repositories
             return item;
         }
 
-        public long Save (OrderAddProductRequest param)
+        public long Save (CreateOrderDetailParam param)
         {
             var query = context.Set<OrderDetail>().AsQueryable();
 
-            var orderObj = context.Order.Where(x => x.Active.Value && x.PkOrder == param.order).FirstOrDefault();
+            var orderObj = context.Order.Where(x => x.Active.Value && x.PkOrder == param.Order).FirstOrDefault();
             if (orderObj == null)
                 return -1;
 
             var model = new OrderDetail
             {
-                FkOrder = param.order,
-                FkProduct = param.product,
+                FkOrder = param.Order,
+                FkProduct = param.Product,
                 };
 
             context.Set<OrderDetail>().Add(model);

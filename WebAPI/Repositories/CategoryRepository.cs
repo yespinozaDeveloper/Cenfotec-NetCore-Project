@@ -40,13 +40,9 @@ namespace WebAPI.Repositories
 
         public long Save(CategoryEntity data)
         {
-            var query = context.Set<Category>().AsQueryable();
-            var next = query.Max(p => p.PkCategory) + 1;
-
             var model = new Category
             {
                 Name = data.Name,
-                PkCategory = next,
             };
 
             context.Set<Category>().Add(model);

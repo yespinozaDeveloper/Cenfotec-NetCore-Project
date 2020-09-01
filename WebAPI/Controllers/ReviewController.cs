@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models.Entity;
+using Models.Request;
 using WebAPI.Models;
 using WebAPI.Repositories;
 
@@ -16,11 +17,11 @@ namespace WebAPI.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly ApplicationSettings _settings;
-        private readonly ProductRepository _repository;
+        private readonly ReviewRepository _repository;
 
         public ReviewController(ILogger<ProductController> logger,
                                   ApplicationSettings settings,
-                                  ProductRepository repository)
+                                  ReviewRepository repository)
         {
             _logger = logger;
             _settings = settings;
@@ -46,20 +47,20 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("ByCategory/{id}")]
-        public IActionResult GetByCategory(int id)
+        [HttpGet("ByProduct/{id}")]
+        public IActionResult GetByProduct(int id)
         {
-            var result = _repository.GetByCategory(id);
+            var result = _repository.GetByProduct(id);
 
             if (result == null)
             {
-                return NotFound(new { Message = "No se encuentraron elementos" });
+                return NotFound(new { Message = "No se encontraron elementos" });
             }
             return Ok(result);
         }
 
         [HttpPost]
-        public IActionResult Create(ProductEntity request)
+        public IActionResult Create(MaintenanceProductReviewParam request)
         {
             long newProductId = _repository.Save(request);
             var data = _repository.Get(newProductId);
@@ -67,7 +68,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(ProductEntity request)
+        public IActionResult Put(MaintenanceProductReviewParam request)
         {
             var flag = _repository.Update(request);
             if (flag)

@@ -1,4 +1,5 @@
 ﻿using Models.Entity;
+using Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,93 +17,153 @@ namespace WebAPI.Repositories
             context = dbContext;
         }
 
-        public List<ProductEntity> Get()
+        public List<ReviewEntity> Get()
         {
-            var list = context.Product.Where(x => x.Active.Value).Join(context.Category.Where(z => z.Active.Value),
-                      x => x.FkCategory,
-                      y => y.PkCategory,
-                      (product, category) => new ProductEntity
-                      {
-                          Id = product.PkProduct,
-                          Name = product.Name,
-                          Price = product.Price,
-                          Category = new CategoryEntity
-                          {
-                              Id = category.PkCategory,
-                              Name = category.Name
-                          }
-                      }).ToList();
+            var list = (from a in context.ProductReview
+                        where a.Active.Value 
+                        join b in context.Product
+                        on a.FkProduct equals b.PkProduct
+                        join c in context.User
+                            on a.FkUser equals c.PkUser
+                        join d in context.Category
+                            on b.FkCategory equals d.PkCategory
+                        select new ReviewEntity
+                        {
+                            Id = a.PkProductReview,
+                            Detail = a.Detail,
+                            Product = new ProductEntity
+                            {
+                                Id = b.PkProduct,
+                                Name = b.Name,
+                                Price = b.Price,
+                                Category = new CategoryEntity
+                                {
+                                    Id = d.PkCategory,
+                                    Name = d.Name
+                                }
+                            },
+                            User = new UserEntity
+                            {
+                                Id = c.PkUser,
+                                Name = c.Name,
+                                PersonalIdentification = c.PersonalIdentification,
+                                Address = c.Address,
+                                Email = c.Email
+                            }
+                        }).ToList();
             return list;
         }
 
-        public ProductEntity Get(long id)
+        public ReviewEntity Get(long id)
         {
-            var product = context.Product.Where(x => x.PkProduct == id && x.Active.Value).Join(context.Category.Where(z => z.Active.Value),
-                      x => x.FkCategory,
-                      y => y.PkCategory,
-                      (product, category) => new ProductEntity
-                      {
-                          Id = product.PkProduct,
-                          Name = product.Name,
-                          Price = product.Price,
-                          Category = new CategoryEntity
-                          {
-                              Id = category.PkCategory,
-                              Name = category.Name
-                          }
-                      }).FirstOrDefault();
-            return product;
+            var item = (from a in context.ProductReview
+                        where a.Active.Value && a.PkProductReview == id
+                        join b in context.Product
+                        on a.FkProduct equals b.PkProduct
+                        join c in context.User
+                            on a.FkUser equals c.PkUser
+                        join d in context.Category
+                            on b.FkCategory equals d.PkCategory
+                        select new ReviewEntity
+                        {
+                            Id = a.PkProductReview,
+                            Detail = a.Detail,
+                            Product = new ProductEntity
+                            {
+                                Id = b.PkProduct,
+                                Name = b.Name,
+                                Price = b.Price,
+                                Category = new CategoryEntity
+                                {
+                                    Id = d.PkCategory,
+                                    Name = d.Name
+                                }
+                            },
+                            User = new UserEntity
+                            {
+                                Id = c.PkUser,
+                                Name = c.Name,
+                                PersonalIdentification = c.PersonalIdentification,
+                                Address = c.Address,
+                                Email = c.Email
+                            }
+                        }).FirstOrDefault();
+            return item;
         }
 
-        public List<ProductEntity> GetByCategory(long id)
+        public List<ReviewEntity> GetByProduct(long id)
         {
-            var productList = context.Product.Where(x => x.Active.Value).Join(context.Category.Where(z => z.Active.Value && z.PkCategory == id),
-                      x => x.FkCategory,
-                      y => y.PkCategory,
-                      (product, category) => new ProductEntity
-                      {
-                          Id = product.PkProduct,
-                          Name = product.Name,
-                          Price = product.Price,
-                          Category = new CategoryEntity
-                          {
-                              Id = category.PkCategory,
-                              Name = category.Name
-                          }
-                      }).ToList();
-            return productList;
+            var list = (from a in context.ProductReview
+                        where a.Active.Value && a.FkProduct == id
+                        join b in context.Product
+                        on a.FkProduct equals b.PkProduct
+                        join c in context.User
+                            on a.FkUser equals c.PkUser
+                        join d in context.Category
+                            on b.FkCategory equals d.PkCategory
+                        select new ReviewEntity
+                        {
+                            Id = a.PkProductReview,
+                            Detail = a.Detail,
+                            Product = new ProductEntity
+                            {
+                                Id = b.PkProduct,
+                                Name = b.Name,
+                                Price = b.Price,
+                                Category = new CategoryEntity
+                                {
+                                    Id = d.PkCategory,
+                                    Name = d.Name
+                                }
+                            },
+                            User = new UserEntity
+                            {
+                                Id = c.PkUser,
+                                Name = c.Name,
+                                PersonalIdentification = c.PersonalIdentification,
+                                Address = c.Address,
+                                Email = c.Email
+                            }
+                        }).ToList();
+            return list;
         }
 
-        public long Save(ProductEntity data)
+        public long Save(MaintenanceProductReviewParam data)
         {
-            var query = context.Set<Product>().AsQueryable();
-            var next = query.Max(p => p.PkProduct) + 1;
+            var query = context.Set<ProductReview>().AsQueryable();
 
-            var model = new Product
+            var productObj = context.Product.Where(x => x.Active.Value && (x.PkProduct == data.Product)).FirstOrDefault();
+            if (productObj == null)
+                return -1;
+
+            var userObj = context.User.Where(x => x.Active.Value && (x.PkUser == data.User)).FirstOrDefault();
+            if (userObj == null)
+                return -1;
+
+            var model = new ProductReview
             {
-                Name = data.Name,
-                Price = data.Price,
+                Detail = data.Detail,
+                FkProduct = data.Product,
+                FkUser = data.User,
                 Active = true,
-                FkCategory = data.Category.Id,
-                PkProduct = next,
             };
 
-            context.Set<Product>().Add(model);
+            context.Set<ProductReview>().Add(model);
 
             context.SaveChanges();
 
-            return model.PkProduct;
+            return model.PkProductReview;
         }
 
-        public bool Update(ProductEntity data)
+        public bool Update(MaintenanceProductReviewParam data)
         {
-            Product model = context.Product.Where(x => x.PkProduct == data.Id && x.Active.Value).FirstOrDefault();
+            ProductReview model = context.ProductReview.Where(x => x.PkProductReview == data.Id && x.Active.Value).FirstOrDefault();
 
             if (model == null)
                 return false;
 
-            model.Price = data.Price;
-            model.Name = data.Name;
+            model.FkProduct = data.Product;
+            model.Detail = data.Detail;
             context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
             context.SaveChanges();
@@ -112,7 +173,7 @@ namespace WebAPI.Repositories
 
         public bool Delete(long id)
         {
-            Product model = context.Product.Where(x => x.PkProduct == id && x.Active.Value).FirstOrDefault();
+            ProductReview model = context.ProductReview.Where(x => x.PkProductReview == id && x.Active.Value).FirstOrDefault();
 
             if (model == null)
                 return false;

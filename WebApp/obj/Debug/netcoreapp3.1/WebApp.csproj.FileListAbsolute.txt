@@ -96,7 +96,6 @@ D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\WebApp.RazorCoreGenerate.cache
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
-D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Product\AddProduct.cshtml.g.cs
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Product\Product.cshtml.g.cs
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Product\ProductMaintenance.cshtml.g.cs
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Product\Products.cshtml.g.cs
@@ -118,3 +117,12 @@ D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\WebApp.MvcApplicationPartsAssemblyInfo.cs
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Product\SaveProduct.cshtml.g.cs
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Category\CategoryMaintenance.cshtml.g.cs
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Category\SaveCategory.cshtml.g.cs

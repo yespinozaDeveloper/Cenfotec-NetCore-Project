@@ -1,0 +1,28 @@
+﻿@model Models.ViewModel.SaveCategoryViewModel
+
+@{
+    ViewData["Title"] = "Category";
+    Layout = "_AdminLayout";
+}
+
+<div>
+    <br />
+    <h2 class="text-center">Category</h2>
+
+    <div class="title text-center">
+        <p>
+            <form class="container" style="width:400px;text-align:center;">
+                @Html.EditorFor(model => model.Category.Id, new { htmlAttributes = new { @class = "d-none", @readonly = "readonly" } })
+                <div class="form-group mx-sm-3 mb-2">
+                    <input asp-for="@Model.Category.Name" type="text" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <button type="submit" class="btn btn-dark" asp-controller="Category" asp-action="Save"> <i class="fa fa-save"></i> Save</button>
+                </div>
+            </form>
+</p>
+    </div>
+    <div class="container-fluid justify-content-center">
+        <br />
+    </div>
+</div>

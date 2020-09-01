@@ -1,0 +1,36 @@
+﻿@model Models.ViewModel.SaveProductViewModel
+
+@{
+    ViewData["Title"] = "Product";
+    Layout = "_AdminLayout";
+}
+
+<div>
+    <br />
+    <h2 class="text-center">Product</h2>
+
+    <div class="title text-center">
+        <p>
+            <form class="container" style="width:400px;text-align:center;">
+                @Html.EditorFor(model => model.Product.Id, new { htmlAttributes = new { @class = "d-none", @readonly = "readonly" } })
+                <div class="form-group mx-sm-3 mb-2">
+                    <input asp-for="@Model.Product.Name" type="text" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    @Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @type = "number", @min = "1", @step = "0.01", @class = "form-control", placeholder = "Price" } })
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    @Html.DropDownListFor(x => Model.SelectedCategoryId,
+                    new SelectList(Model.CategoryList, "Value", "Text"),
+                    htmlAttributes: new { @class = "form-control", id = "Category", @required = true })
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <button type="submit" class="btn btn-dark" asp-controller="Product" asp-action="Save"> <i class="fa fa-save"></i> Save</button>
+                </div>
+            </form>
+</p>
+    </div>
+    <div class="container-fluid justify-content-center">
+        <br />
+    </div>
+</div>

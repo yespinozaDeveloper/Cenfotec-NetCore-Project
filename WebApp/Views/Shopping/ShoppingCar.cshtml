@@ -1,11 +1,11 @@
-﻿
+﻿@model Models.ViewModel.ShoppingCarViewModel
 @{
     ViewData["Title"] = "Product";
 }
 <div class="container text-right">
     <br />
-    <b>Summary: $1,000</b>
-    <button class="btn-outline-dark btn-lg"> Order Now </button>
+    <b>Summary: $@Model.ProductList.Sum(x => x.Price).ToString("###,###,##0.00")</b>
+    <button class="btn-outline-dark btn-lg" data-toggle="modal" data-target="#myModal"> Order Now </button>
     <br />
     <br />
 </div>
@@ -21,20 +21,54 @@
         </thead>
         <tbody>
             @{int count = 26; }
-            @for (int i = 1; i <= count; i++)
+            @for (int i = 1; i <= Model.ProductList.Count; i++)
             {
                 <tr>
                     <th scope="row">@i.ToString("00")</th>
-                    <td>Product @i.ToString("00")</td>
-                    <td>$@i.ToString("0.00").Replace(".","")</td>
-                    <td><i class="ace-icon fa fa-trash"></i> <i class="ace-icon fa fa-info"></i> </td>
+                    <td>Product @Model.ProductList.ElementAt(i - 1).Name</td>
+                    <td>$@Model.ProductList.ElementAt(i - 1).Price.ToString("0.00").Replace(".", "")</td>
+                    <td>
+                        <a asp-controller="Shopping" asp-action="DeleteProduct" asp-route-accountKey="@Model.ProductList.ElementAtOrDefault(i - 1).Id">
+                            <i class="ace-icon fa fa-trash"></i> 
+                        </a>
+                    </td>
                 </tr>
             }
             <tr>
                 <td></td>
                 <th scope="row" class="row disabled">Summary</th>
-                <td class="disabled" colspan="3">$1,000</td>
+                <td class="disabled" colspan="3">$@Model.ProductList.Sum(x=>x.Price).ToString("###,###,##0.00")</td>
             </tr>
         </tbody>
     </table>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Order Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <form class="container" style="width:400px;text-align:center;">
+                    <div class="form-group mx-sm-3 mb-2">
+                        @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter your user" } })
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @class = "form-control", placeholder = "Enter your password" } })
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <button type="submit" class="btn btn-success" asp-controller="Shopping" asp-action="Save"> <i class="fa fa-check"></i> Confirm</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 </div>

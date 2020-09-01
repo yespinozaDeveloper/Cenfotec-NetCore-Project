@@ -97,18 +97,21 @@ namespace WebAPI.Repositories
             return productList;
         }
 
-        public long Save(ProductEntity data)
+        public long Save(ProductEntity param)
         {
             var query = context.Set<Product>().AsQueryable();
-            var next = query.Max(p => p.PkProduct) + 1;
+
+            var categoryObj = context.Category.Where(x => x.Active.Value && x.PkCategory == param.Category.Id).FirstOrDefault();
+            if (categoryObj == null)
+                return -1;
+
 
             var model = new Product
             {
-                Name = data.Name,
-                Price = data.Price,
+                Name = param.Name,
+                Price = param.Price,
                 Active = true,
-                FkCategory = data.Category.Id,
-                PkProduct = next,
+                FkCategory = param.Category.Id,
             };
 
             context.Set<Product>().Add(model);
