@@ -51,6 +51,7 @@ namespace WebAPI
             services.AddScoped<UserRepository>();
             services.AddScoped<OrderRepository>();
             services.AddScoped<OrderDetailRepository>();
+            services.AddScoped<ReviewRepository>();
 
             services.AddCors(options => options.AddDefaultPolicy(builder => {
                 // Fluent API

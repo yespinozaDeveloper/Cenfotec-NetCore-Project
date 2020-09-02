@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using WebApp.Models;
 using WebApp.Repositories;
+using Models.Request;
 
 namespace WebApp.Controllers
 {
@@ -94,6 +95,17 @@ namespace WebApp.Controllers
                         }
                         else
                         {
+                            var orderEntity = await OrderRepository.Create(userEntity.Id.ToString());
+                            foreach(var item in ShoppingCarList)
+                            {
+                                await OrderDetailRepository.Create(new CreateOrderDetailParam()
+                                {
+                                    Order = orderEntity.Id,
+                                    Product = item.Id
+                                });
+                            }
+                            orderEntity.Status = "COMPLETED";
+                            orderEntity = await OrderRepository.Update(orderEntity);
                             ShoppingCarList.Clear();
                             return ShoppingCar();
                         }

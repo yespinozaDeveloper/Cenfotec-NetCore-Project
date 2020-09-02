@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models.Entity;
+using Models.Request;
 using Models.ViewModel;
 using Newtonsoft.Json;
 using System;
@@ -17,7 +18,7 @@ namespace WebApp.Controllers
 {
     public class ProductController : Controller
     {
-        public static ProductViewModel viewModel;
+        public static ProductsViewModel viewModel;
         private readonly ILogger<ProductController> _logger;
         private readonly ApplicationSettings _settings;
 
@@ -26,7 +27,7 @@ namespace WebApp.Controllers
             _logger = logger;
             _settings = settings;
              if(viewModel == null)
-                viewModel = new ProductViewModel();
+                viewModel = new ProductsViewModel();
         }
 
         public async System.Threading.Tasks.Task<IActionResult> Products()
@@ -45,7 +46,7 @@ namespace WebApp.Controllers
             return View(getViewModel());
         }
 
-        public async System.Threading.Tasks.Task<IActionResult> ProductsByCategory(ProductViewModel viewModel)
+        public async System.Threading.Tasks.Task<IActionResult> ProductsByCategory(ProductsViewModel viewModel)
         {
             try
             {
@@ -64,14 +65,34 @@ namespace WebApp.Controllers
             return View("Products",viewModel);
         }
 
-        public IActionResult Product(int id)
+        public async System.Threading.Tasks.Task<IActionResult> Product(long id)
         {
-            var productList = getViewModel().ProductList.Where(x => x.Id == id).ToList();
-            var viewModel = new ProductViewModel()
+            var product = await ProductRepository.Get(id.ToString());
+            var viewModel = new ProductViewModel(product);
+            var reviews = await ReviewRepository.GetByProduct(id.ToString());
+            viewModel.Reviews = reviews;
+            return View("Product", viewModel);
+        }
+
+        public async System.Threading.Tasks.Task<IActionResult> Comment(ProductViewModel param)
+        {
+            var user = await UserRepository.Login(param.User, param.Password);
+            if (user == null)
             {
-                ProductList = productList
-            };
-            return View(viewModel);
+
+            }
+            else
+            {
+                var request = new MaintenanceProductReviewParam
+                {
+                    Product = param.Product.Id,
+                    User = user.Id,
+                    Detail = param.Comment
+                };
+                await ReviewRepository.Create(request);
+                return await Product(param.Product.Id);
+            }
+            return View("Product", param);
         }
 
         public async System.Threading.Tasks.Task<IActionResult> ProductMaintenance()
@@ -169,7 +190,7 @@ namespace WebApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public static ProductViewModel getViewModel()
+        public static ProductsViewModel getViewModel()
         {
             return viewModel;
         }

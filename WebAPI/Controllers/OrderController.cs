@@ -52,11 +52,23 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string user)
+        public IActionResult Create(CreateOrderParam param)
         {
-            long newProductId = _repository.Save(user);
+            long newProductId = _repository.Save(param.User);
             var data = _repository.Get(newProductId);
             return CreatedAtAction(nameof(GetById), new { Id = newProductId }, data);
+        }
+
+        [HttpPut]
+        public IActionResult Put(OrderEntity request)
+        {
+            var flag = _repository.Update(request);
+            if (flag)
+            {
+                return Ok(request);
+            }
+            else
+                return NotFound(new { Message = "No se encuentra el elemento" });
         }
 
         [HttpDelete("{id}")]

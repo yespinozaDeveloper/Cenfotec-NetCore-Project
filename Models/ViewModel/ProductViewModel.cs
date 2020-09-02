@@ -7,33 +7,23 @@ namespace Models.ViewModel
 {
     public class ProductViewModel
     {
-        public List<ProductEntity> ProductList { get; set; }
-        public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public ProductEntity Product { get; set; }
 
-        public string SelectedCategoryId { get; set; }
+        public List<ReviewEntity> Reviews { get; set; }
 
-        public string ProductSearchValue { get; set; }
-        public int ColumnsByRow { get; set; }
-
+        public string Comment { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
         public ProductViewModel()
         {
-            ProductList = new List<ProductEntity>();
-            CategoryList = new SelectList(new List<SelectListItem>() { new SelectListItem { Value = "-1", Text = "All" } }, "Value", "Text");
-            ColumnsByRow = 5;
+            Product = new ProductEntity();
+            Reviews = new List<ReviewEntity>();
         }
 
-        public ProductViewModel(List<CategoryEntity> categories)
+        public ProductViewModel(ProductEntity product)
         {
-            ProductList = new List<ProductEntity>();
-            ColumnsByRow = 5;
-            categories.Insert(0, new CategoryEntity { Id = -1, Name = "All" });
-            setCategoryList(categories);
-        }
-
-        public void setCategoryList(List<CategoryEntity> categories)
-        {
-            categories.Insert(0, new CategoryEntity { Id = -1, Name = "All" });
-            CategoryList = new SelectList(categories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList(), "Value", "Text");
+            Product = product;
+            Reviews = new List<ReviewEntity>();
         }
     }
 }

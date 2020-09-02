@@ -3,6 +3,7 @@ using Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebAPI.Infrastructure.Data.Models;
 
@@ -55,7 +56,7 @@ namespace WebAPI.Repositories
         public OrderEntity Get(long id)
         {
             var item = (from a in context.Order
-                        where a.Active.Value
+                        where a.Active.Value && a.PkOrder == id
                         join c in context.User
                         on a.FkUser equals c.PkUser
                         join d in context.Status
@@ -91,7 +92,7 @@ namespace WebAPI.Repositories
         {
             var query = context.Set<Order>().AsQueryable();
 
-            var userObj = context.User.Where(x => x.Active.Value && (x.Email == user || x.PersonalIdentification == user)).FirstOrDefault();
+            var userObj = context.User.Where(x => x.Active.Value && x.PkUser.ToString() == user).FirstOrDefault();
             if (userObj == null)
                 return -1;
             var model = new Order
@@ -117,6 +118,21 @@ namespace WebAPI.Repositories
                 return false;
 
             model.Active = false;
+            context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+            context.SaveChanges();
+
+            return true;
+        }
+
+        public bool Update(OrderEntity data)
+        {
+            Order model = context.Order.Where(x => x.PkOrder == data.Id && x.Active.Value).FirstOrDefault();
+
+            if (model == null)
+                return false;
+
+            model.FkStatus = context.Status.Where(x => x.Name == data.Status).FirstOrDefault().PkStatus;
             context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
             context.SaveChanges();

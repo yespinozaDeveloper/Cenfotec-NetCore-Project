@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="~/css/blog.css" />
 <div class="container bootdey text-center">
 
-    @if (Model == null || Model.ProductList == null || Model.ProductList.Count == 0)
+    @if (Model == null || Model.Product == null)
     {
         <br />
         <h2 class="disabled">Product not found.</h2>
@@ -16,10 +16,7 @@
     {
         <div class="row">
             <div class="col-md-3 mx-auto">
-                @{var count = Model.ProductList.Count; }
-                @{int columns = Model.ColumnsByRow; }
-                @{int rest = count % columns == 0 ? 0 : columns - count % columns; }
-                <h2 class="text-primary">@Model.ProductList.FirstOrDefault().Name</h2>
+                <h2 class="text-primary">@Model.Product.Name</h2>
                 <div class="box-product-outer col-sm">
                     <div class="box-product">
                         <div class="img-wrapper">
@@ -27,14 +24,14 @@
                                 <img alt="Product" src="@Url.Content("~/Images/default-product-image.png")">
                             </a>
                             <div class="option">
-                                <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart" asp-controller="Shopping" asp-action="AddProduct" asp-route-accountKey="@Model.ProductList.FirstOrDefault().Id">
+                                <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add to Cart" asp-controller="Shopping" asp-action="AddProduct" asp-route-accountKey="@Model.Product.Id">
                                     <i class="ace-icon fa fa-shopping-cart"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="price">
-                            <h6 class="text-dark">Category: @Model.ProductList.FirstOrDefault().Category?.Name</h6>
-                            <h4 class="text-success">@Model.ProductList.FirstOrDefault().Price.ToString("$###,###,##0.00")</h4>
+                            <h6 class="text-dark">Category: @Model.Product.Category?.Name</h6>
+                            <h4 class="text-success">@Model.Product.Price.ToString("$###,###,##0.00")</h4>
                         </div>
                     </div>
                 </div>
@@ -45,47 +42,70 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="blog-comment">
-                            <h3 class="text-info">Comments</h3>
                             <hr />
-                            <ul class="comments">
-                                <li class="clearfix">
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
-                                    <div class="post-comments">
-                                        <p class="meta">Dec 18, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Etiam a sapien odio, sit amet
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="clearfix">
-                                    <img src="https://bootdey.com/img/Content/user_2.jpg" class="avatar" alt="">
-                                    <div class="post-comments">
-                                        <p class="meta">Dec 19, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Etiam a sapien odio, sit amet
-                                        </p>
-                                    </div>
-
-                                    <ul class="comments">
+                            <h3 class="text-info">Comments</h3>
+                            <button class="btn-outline-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Comment</button>
+                            <hr />
+                            @if (@Model.Reviews == null || @Model.Reviews.Count == 0)
+                            {
+                                <h6 class="text-dark">Product has no comments...</h6>
+                                <br />
+                            }
+                            else
+                            {
+                                <ul class="comments">
+                                    @foreach (var item in Model.Reviews)
+                                    {
                                         <li class="clearfix">
-                                            <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
+                                            <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
                                             <div class="post-comments">
-                                                <p class="meta">Dec 20, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
+                                                <p class="meta">@item.User.Name says : <i class="pull-right"></i></p>
                                                 <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                    Etiam a sapien odio, sit amet
+                                                    @item.Detail
                                                 </p>
                                             </div>
                                         </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                                    }
+                                </ul>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     }
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Order Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <form class="container" style="width:400px;text-align:center;">
+                    @Html.EditorFor(model => model.Product.Id, new { htmlAttributes = new { @class = "d-none", @readonly = "readonly" } })
+                    <div class="form-group mx-sm-3 mb-2">
+                        @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter your user" } })
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @class = "form-control", placeholder = "Enter your password" } })
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", placeholder = "Enter your comment", rows = 5})
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <button type="submit" class="btn btn-success" asp-controller="Product" asp-action="Comment"> <i class="fa fa-check"></i> Confirm</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 </div>
