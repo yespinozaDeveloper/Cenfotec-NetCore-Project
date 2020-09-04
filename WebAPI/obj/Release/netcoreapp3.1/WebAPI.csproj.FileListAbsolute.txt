@@ -1,0 +1,5 @@
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Release\netcoreapp3.1\WebAPI.csprojAssemblyReference.cache
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Release\netcoreapp3.1\WebAPI.AssemblyInfoInputs.cache
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Release\netcoreapp3.1\WebAPI.AssemblyInfo.cs
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Release\netcoreapp3.1\WebAPI.csproj.CoreCompileInputs.cache
+D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Release\netcoreapp3.1\WebAPI.MvcApplicationPartsAssemblyInfo.cache

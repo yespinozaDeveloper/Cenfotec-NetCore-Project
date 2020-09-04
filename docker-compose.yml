@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  
+  finalproject-models:
+    container_name: Models
+    build: 
+      context: ../FinalProject
+      dockerfile: Models/Dockerfile
+
+    ports:
+      - 8083:80
+  
+  finalproject-webapi:
+    container_name: WebAPI
+    build: 
+      context: ../FinalProject
+      dockerfile: WebAPI/Dockerfile
+
+    ports:
+      - 8081:80
+    environment: 
+      - AppSettings__Variable="This is from docker"
+    depends_on: 
+      - finalproject-models
+    
+  
+  finalproject-webapp:
+    container_name: WebApp
+    build: 
+      context : ../FinalProject
+      dockerfile: WebApp/Dockerfile
+    environment: 
+      - ServerUrl=http://WebAPI:80/
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 8082:80
+    depends_on: 
+      - finalproject-webapi

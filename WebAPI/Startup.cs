@@ -62,7 +62,7 @@ namespace WebAPI
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Net Core API", Version = "1.0.0", Contact = new OpenApiContact() { Name ="yespinozaDeveloper", Email="yespinoza@tecnosys.net"} });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetCoreAPI", Version = "1.0.0", Contact = new OpenApiContact() { Name ="yespinozaDeveloper", Email="yespinoza@tecnosys.net"} });
             });
 
             services.AddControllers();
@@ -76,12 +76,13 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
+            app.UseSwagger(); 
 
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Net Core API");
+                c.SwaggerEndpoint("/_tmp-NetCore-WebAPI/swagger/v1/swagger.json", "NetCoreAPI");
+
             });
 
             app.UseCors();

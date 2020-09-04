@@ -5,7 +5,6 @@ D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.MvcApplicationPartsAssemblyInfo.cache
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\bin\Debug\netcoreapp3.1\appsettings.Development.json
-D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\bin\Debug\netcoreapp3.1\appsettings.json
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\bin\Debug\netcoreapp3.1\WebAPI.exe
 D:\JEspinoza\Educacion\Cenfotec\Net Core\Github\FinalProject\FinalProject\WebAPI\bin\Debug\netcoreapp3.1\WebAPI.deps.json
